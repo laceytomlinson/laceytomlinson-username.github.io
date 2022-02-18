@@ -1,0 +1,725 @@
+<!--
+GALLERY
+-->
+<script data-for="cmp_gallery" data-template="cmp_gallery" type="text/x-handlebars-template">
+<div class="componentholder gallerywrap">
+	<div class="gallery-items" data-for="{{uid}}">
+		{{#each children}}
+		<div class="cmp_component cmp_gallery-child"></div>
+		{{/each}}
+	</div>
+</div>
+<div class="galleryindicator" data-for="{{uid}}">
+	<p class="screenreader"><span class="galleryindicator-current">0</span> / <span class="galleryindicator-total">0</span></p>
+	{{#each children}}
+	<div class="galleryindicator-item">{{this.index}}</div>
+	{{/each}}
+</div>
+<button class="gallerycontrol gallerycontrol-next" data-action="g_next" data-for="{{uid}}" >
+	<svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="{{uid}}-icon-next">
+		<title id="{{uid}}-icon-next">{{translate "Next"}}</title>
+		<use xlink:href='#icon_arrow_right' />
+	</svg>
+</button>
+<button class="gallerycontrol gallerycontrol-prev" data-action="g_prev" data-for="{{uid}}">
+	<svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="{{uid}}-icon-previous">
+		<title id="{{uid}}-icon-previous">{{translate "Previous"}}</title>
+		<use xlink:href='#icon_arrow_left' />
+	</svg>
+</button>
+</script>
+
+<!--
+GALLERY - NO UI
+-->
+<script data-for="cmp_gallery" data-template="no-ui" data-name="No UI" type="text/x-handlebars-template">
+<div class="componentholder gallerywrap">
+	<div class="gallery-items" data-for="{{uid}}">
+	{{#each children}}
+		<div class="cmp_component cmp_gallery-child"></div>
+	{{/each}}
+	</div>
+</div>
+</script>
+<!-- 
+GRID REVEAL
+-->
+<script data-for="cmp_gridreveal" data-template="cmp_gridreveal" type="text/x-handlebars-template">
+{{#* inline "gridrevealItem"}}
+<li class="gridreveal-item card-container gridreveal" data-index="{{index}}" id="{{@root.uid}}-flipcard-{{index}}" data-component="{{@root.uid}}" data-index="{{index}}" data-uid="{{uid}}">
+	<button class="gridreveal-button" data-index="{{index}}" id="{{@root.uid}}-front-{{index}}" aria-controls="{{@root.uid}}-back-{{index}}" aria-expanded="false">
+		{{#if hasThumbnail}}<span class="gridreveal-image">{{{thumbnail}}}</span>{{/if}}
+		<span class="gridreveal-button-label">{{{settext title}}}</span>
+		<span class="gridreveal-button-icon">
+			<svg class="icon-expand" width="24" height="24" viewBox="0 0 24 24" focusable="false"aria-describedby="{{@root.uid}}-icon-expand-{{index}}">
+				<title id="{{@root.uid}}-icon-expand-{{index}}">{{translate "Unread"}}</title>
+				<use xlink:href='#icon_arrow_right' />
+			</svg>
+			<svg class="icon-complete" width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="{{@root.uid}}-icon-complete-{{index}}">
+				<title id="{{@root.uid}}-icon-complete-{{index}}">{{translate "Complete"}}</title>
+				<use xlink:href='#icon_tick' />
+			</svg>
+		</span>
+	</button>
+	<div id="{{@root.uid}}-back-{{index}}" class="gridreveal-content" aria-hidden="true" role="region">
+		<div class="gridreveal-content-inner gridreveal-content-heading component-root" data-render="{{uid}}" tabindex="-1">{{{settext content}}}</div>
+	</div>
+	<div class="gridreveal-content-placeholder"></div>
+</li>
+{{/inline}}
+
+<ul class="gridreveal-list">
+{{#each items}}
+	{{> gridrevealItem}}
+{{/each}}
+</ul>
+</script>
+
+<!--
+HERO
+-->
+<script data-for="cmp_hero" data-template="cmp_hero" type="text/x-handlebars-template">
+{{#each children}}
+	<div class="cmp_component cmp_hero-child"></div>
+{{/each}}
+{{!-- <button type="button" class="hero-begin" title="{{translate 'Scroll down'}}">
+	<svg width='24' height='24' viewBox='0 0 24 24' focusable="false" aria-describedby="{{uid}}-scroll">
+		<title id="{{uid}}-scroll">{{translate "Scroll down"}}</title>
+		<use xlink:href='#icon_arrow_down' />
+	</svg>
+</button> --}}
+</script>
+<!-- 
+HOTSPOTS
+-->
+<script data-for="cmp_hotspots" data-template="cmp_hotspots" type="text/x-handlebars-template">
+{{#* inline "hotspotitem"}}
+<div class="cmp_hotspot-item {{state}} noTapSelection" data-component="{{@root.uid}}" data-index="{{index}}" style="left:{{options.x}};top:{{options.y}}">
+	<button type="button" class="cmp_hotspot-item-icon" data-index="{{index}}" aria-label="{{title}}">
+		<span class="hotspot-item-icon">
+			{{#if hasThumbnail}}
+			{{{thumbnail}}}
+			{{else}}
+			<svg class="hotspot-item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+				<use xlink:href='#icon_plus' />
+			</svg>
+			{{/if}}
+		</span>
+		<svg class="hotspot-item-icon-visited" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+			<use xlink:href='#icon_tick' />
+		</svg>
+	</button>
+	<div class="cmp_hotspot-item-content pos-{{options.location}}" tabindex="-1">
+		<div class="cmp_hotspot-content-inner component-root" data-render="{{uid}}">{{{settext content}}}</div>
+	</div>
+</div>
+{{/inline}}
+
+<div class="cmp_hotspots-container" cmp-usepopup>
+	<div class="hotspots-image-wrapper"></div>
+	{{#each items}}
+	    {{> hotspotitem}}
+	{{/each}}
+</div>
+</script>
+<!--
+PICTURE
+-->
+<script data-for="cmp_picture" data-template="cmp_picture" type="text/x-handlebars-template">
+{{#* inline "imagesource"}}
+<source srcset="{{src}}" {{#if hasMediaAttribure}}media="{{media}}"{{/if}} />
+{{/inline}}
+
+{{#if hasLink}}<a href="{{link}}" target="{{linkTarget}}" rel="noopener">{{/if}}
+{{#if multisource}}
+<picture style="position:relative;display:block;">
+	{{#each sources}}
+	    {{> imagesource}}
+	{{/each}}
+	<img srcset="{{src}}" alt="{{alt}}" width="{{intrinsicwidth}}" height="{{intrinsicheight}}">
+</picture>
+{{else}}
+	{{#if src}}
+	<img style="position:relative;display: block;" src="{{{src}}}" alt="{{alt}}" width="{{intrinsicwidth}}" height="{{intrinsicheight}}">
+	{{else}}
+	<div class="no-image-source"><span class="content">{{translate "No image provided."}}</span></div>
+	{{/if}}
+{{/if}}
+{{#if hasLink}}</a>{{/if}}
+{{#if hasCaption}}
+<div class="cmp_picture-caption">{{caption}}</div>
+{{/if}}
+</script>
+<!--
+STACK
+-->
+<script data-for="cmp_stack" data-template="cmp_stack" type="text/x-handlebars-template">
+<div class="cmp_stack-children">
+	{{#each children}}
+	<div class="cmp_stack-child-wrapper">
+		<div class="cmp_stack-child cmp_component"></div>
+	</div>
+	{{/each}}
+</div>
+</script>
+
+<!--
+TRUE/FALSE
+-->
+<script data-for="cmp_truefalse" data-template="cmp_truefalse" type="text/x-handlebars-template">
+	{{#* inline "answerItem"}}
+	<li class="question-answer">
+		<input name="{{fieldGroup}}" type="{{inputType}}" id="{{inputID}}" data-q="{{questionIndex}}" data-a="{{answerIndex}}"
+		/>
+		<label for="{{inputID}}">
+			<span class="input-ui" aria-hidden="true"></span>
+			{{{settext answer}}}
+			<div class="answer-status" aria-hidden="true">
+				<svg class="icon-correct" width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="{{@root.uid}}-correct">
+					<title id="{{@root.uid}}-correct">{{translate "Correct"}}</title>
+					<use xlink:href='#icon_tick' />
+				</svg>
+				<svg class="icon-incorrect" width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="{{@root.uid}}-incorrect">
+					<title id="{{@root.uid}}-incorrect">{{translate "Incorrect"}}</title>
+					<use xlink:href='#icon_cross' />
+				</svg>
+			</div>
+		</label>
+		<div class="answer-item-feedback" tabindex="-1"></div>
+	</li>
+	{{/inline}}
+
+	<div class="question-item" data-index="{{questionIndex}}">
+		<fieldset>
+			<div class="question-content">
+				<legend class="question-text">{{{settext question}}}</legend>
+				<ul class="answers">
+					{{#each answers}} {{>answerItem}} {{/each}}
+				</ul>
+			</div>
+			<div class="control-container">
+				<button type="button" class="button-general primary submit-button" tabindex="0" disabled>{{translate "Check answer"}}</button>
+				<div class="feedback-content" tabindex="-1"></div>
+				<button type="button" class="button-general primary retry-button" tabindex="-1" disabled>{{translate "Try again"}}</button>  
+			</div> 
+		</fieldset>
+	</div>
+</script>
+<!--
+MODULE:GlossaryPanel2
+-->
+
+<script data-for="mdl_glossarypanel" data-template="navbutton" type="text/x-html-template">
+<button type="button" class="glossary-button" aria-expanded="false" title="{{translate 'Glossary'}}">
+    <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="glossary-svg-icon-glossary">
+        <title id="glossary-svg-icon-glossary">{{translate "Glossary"}}</title>
+        <use xlink:href="#icon_references" />
+    </svg>
+    <span class="label">{{translate "Glossary"}}</span>
+</button>
+</script>
+
+<script data-for="mdl_glossarypanel" data-template="glossarypanel" type="text/x-html-template">
+<div class="glossary-panel-wrap panel-wrap">
+    <div class="glossary-panel panel" role="menu">
+        <div class="panel-content">
+            <h1 tabindex="-1" class="panel-title">{{translate "Glossary"}}</h1>
+            <div class="glossary-list-holder">
+                {{!-- {{{settext content}}} --}}
+                <dl class="glossary-list">
+                {{#each terms}}
+                <div class="glossary-item">
+                    <dt class="glossary-term {{classes}}" data-termuid="{{uid}}">{{term}}</dt>
+                    <dd class="glossary-definition {{classes}}" data-termuid="{{uid}}">{{definition}}</dd> 
+                </div>   
+                {{/each}}
+                </dl>
+            </div>
+        </div>
+        <div class="scroll-gradient"></div>
+    </div>
+    <div class="close-panel-parent">	
+        <button type="button" class='glossary-close glossary-close-button panel-close-button'>
+            <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="glossary-svgicon-close">
+                <title id="glossary-svgicon-close">{{translate "Close"}}</title>
+                <use xlink:href="#icon_cross" />
+            </svg>
+            <!-- <span class="label">{{translate "Close"}}</span> -->
+        </button>
+    </div>
+    <button type="button" class='glossary-close glossary-close-full-page panel-close-full-page' tabindex='-1' aria-hidden='true'></button>
+</div>
+</script>
+
+<script data-for="mdl_glossarypanel" data-template="navbutton-integrated" type="text/x-html-template">
+<!-- <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="glossary-svg-icon-glossary">
+    <title id="glossary-svg-icon-glossary">{{translate "Glossary"}}</title>
+    <use xlink:href="#icon_references" />
+</svg> -->
+<span class="label">{{translate "Glossary"}}</span>
+</script>
+
+<script data-for="mdl_glossarypanel" data-template="glossarypanel-integrated" type="text/x-html-template">
+<div class="glossary-content">
+   <div class="glossary-list-holder">
+        {{!-- {{{settext content}}} --}}
+        <dl class="glossary-list">
+            {{#each terms}}
+            <div class="glossary-item">
+            <dt class="glossary-term {{classes}}" data-termuid="{{uid}}">{{term}}</dt>
+            <dd class="glossary-definition {{classes}}" data-termuid="{{uid}}">{{definition}}</dd>
+            </div>
+            {{/each}}
+        </dl>
+    </div>
+</div>
+<div class="scroll-gradient"></div>
+</script>
+<!--
+MODULE: IndexPanel2
+-->
+<script data-for="mdl_indexpanel" data-template="navbutton" type="text/x-html-template">
+<button type="button" class="index-button" aria-expanded="false" title="{{translate 'Index'}}">	
+	<svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false">		
+		<use xlink:href="#icon_index" />
+	</svg>	
+	<span class="label">{{translate "Index"}}</span>
+</button>
+</script>
+<script data-for="mdl_indexpanel" data-template="indexpanel" type="text/x-html-template">
+
+{{#* inline "pageslist"}}
+	{{#each pages}}
+		<li data-number='{{number}}' class='index-list-item' >
+			<button type="button" class='{{classes}}' data-index='{{index}}' {{#if disabled}}disabled{{/if}}>
+				{{title}}
+				<svg class="item-complete-icon" width="18" height="18" viewBox="0 0 24 24" focusable="false" aria-describedby="index-svg-icon-complete-{{index}}">
+					<title id="index-svg-icon-complete-{{index}}">{{translate "Page complete"}}</title>
+					<use xlink:href="#icon_tick" />
+				</svg>
+			</button>
+		</li>
+	{{/each}}
+{{/inline}}
+
+<div class='index-panel-wrap panel-wrap' role='dialog'>
+	<div class='index-panel panel' role='menu'>		
+		<div class='index-list-holder panel-content'>
+			<h1 tabindex="-1" class="panel-title">{{translate "Index"}}</h1>
+			<ul aria-label='Index' class='index-list'>
+				{{#each groups}}
+				<li>
+					{{#if ../pagesOnly}}
+						{{> pageslist}}
+					{{/if}}
+					{{#if ../groupsOnly}}
+						<li data-number='{{number}}' class='index-list-item' >
+							<button type="button" class='{{groupclasses}}' data-index='{{grouppageindex}}' {{#if groupdisabled}}disabled{{/if}}>
+								{{groupname}}
+								<svg class="item-complete-icon" width="18" height="18" viewBox="0 0 24 24" focusable="false" aria-describedby="index-svg-icon-complete-{{groupindex}}">
+									<title id="index-svg-icon-complete-{{groupindex}}">{{translate "Section complete"}}</title>
+									<use xlink:href="#icon_tick" />
+								</svg>
+							</button>
+						</li>
+					{{/if}}
+					{{#if ../pagesAndGroups}}
+						{{#if ../multiplegroups}}
+						<ul class='index-group-list'>
+							<li>
+								<h2 class='group-header'>
+									<span role="text">
+										<span class="screenreader">{{translate "Section"}} - </span>
+										<span>{{groupname}}</span>
+									</span>
+								</h2>
+							</li>
+							{{> pageslist}}
+						</ul>
+						{{else}}
+							{{> pageslist}}
+						{{/if}}
+					{{/if}}
+					
+				</li>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="scroll-gradient"></div>
+	</div>
+	<div class="close-panel-parent">	
+		<button type="button" class='index-close index-close-button panel-close-button'>
+			<svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="index-svgicon-close">
+				<title id="index-svgicon-close">{{translate "Close"}}</title>
+				<use xlink:href="#icon_cross" />
+			</svg>
+			<!-- <span class="label">{{translate "Close"}}</span> -->
+		</button>
+	</div>
+	<button type="button" class='index-close index-close-full-page panel-close-full-page' tabindex='-1' aria-hidden='true'></button>
+</div>
+</script>
+
+<script data-for="mdl_indexpanel" data-template="navbutton-integrated" type="text/x-html-template">
+<!-- <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false">		
+	<use xlink:href="#icon_index" />
+</svg>	 -->
+<span class="label">{{translate "Contents"}}</span>
+</script>
+
+<script data-for="mdl_indexpanel" data-template="indexpanel-integrated" type="text/x-html-template">
+{{#* inline "pageslist"}}
+	{{#each pages}}
+		<li data-number='{{number}}' class='index-list-item' >
+			<button type="button" class='{{classes}}' data-index='{{index}}' {{#if disabled}}disabled{{/if}}>
+				{{title}}
+				<svg class="item-complete-icon" width="18" height="18" viewBox="0 0 24 24" focusable="false" aria-describedby="index-svg-icon-complete-{{index}}">
+					<title id="index-svg-icon-complete-{{index}}">{{translate "Page complete"}}</title>
+					<use xlink:href="#icon_tick" />
+				</svg>
+			</button>
+		</li>
+	{{/each}}
+{{/inline}}
+<div class="index-panel">
+	<div class='index-list-holder'>
+		<ul aria-label='Index' class='index-list'>
+			{{#each groups}}
+			<li>
+				{{#if ../pagesOnly}}
+					{{> pageslist}}
+				{{/if}}
+				{{#if ../groupsOnly}}
+					<li data-number='{{number}}' class='index-list-item' >
+						<button type="button" class='{{groupclasses}}' data-index='{{grouppageindex}}' {{#if groupdisabled}}disabled{{/if}}>
+							{{groupname}}
+							<svg class="item-complete-icon" width="18" height="18" viewBox="0 0 24 24" focusable="false" aria-describedby="index-svg-icon-complete-{{groupindex}}">
+								<title id="index-svg-icon-complete-{{groupindex}}">{{translate "Section complete"}}</title>
+								<use xlink:href="#icon_tick" />
+							</svg>
+						</button>
+					</li>
+				{{/if}}
+				{{#if ../pagesAndGroups}}
+					{{#if ../multiplegroups}}
+					<ul class='index-group-list'>
+						<li>
+							<h2 class='group-header'>
+								<span role="text">
+									<span class="screenreader">{{translate "Section"}} - </span>
+									<span>{{groupname}}</span>
+								</span>
+							</h2>
+						</li>
+						{{> pageslist}}
+					</ul>
+					{{else}}
+						{{> pageslist}}
+					{{/if}}
+				{{/if}}
+				
+			</li>
+			{{/each}}
+		</ul>
+	</div>
+	<div class="scroll-gradient"></div>
+</div>
+</script>
+<!--
+MODULE: Language Picker
+-->
+
+<script data-for="mdl_languagePicker" data-template="languagePicker" type="text/x-html-template">
+<div class="language-picker">
+    <button class="language-picker-button button-general" aria-expanded="false" aria-controls="language-picker-dropdown" tabindex="0">
+        <span class="language-picker-flag language-picker-flag--{{lang}}" aria-hidden="true" ></span>
+        <span class="language-picker-button-label">{{name}}</span>
+        <span class="screenreader">, {{translate "Select your language"}}</span>
+    </button>
+    <div class="language-picker-dropdown" aria-describedby="language-picker-description" id="language-picker-dropdown">
+        <p class="screenreader language-picker-description">{{translate "Select your language"}}</p>
+        <ul class="language-picker-list" role="listbox">
+        {{#each supportedLanguages}}
+            <li>
+                <a lang="{{htmlCode}}" hreflang="{{htmlCode}}" href="#" role="option" data-value="{{langCode}}" class="language-picker-item language-picker-flag language-picker-flag--{{langCode}}"{{#if selected}} aria-selected="true"{{/if}}>
+                    <span class="language-picker-item-label">{{name}}</span>
+                    {{#if selected}}
+                        <svg class="language-picker-item-tick" width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                            <use xlink:href='#icon_tick' />
+                        </svg>
+                    {{/if}}
+                </a>
+            </li>
+        {{/each}}
+        </ul>
+    </div>
+</div>
+</script>
+<!--
+MODULE: modpopup
+-->
+<script data-for="mdl_modularPopup" data-template="mdl_modularPopup" type="text/x-handlebars-template">
+<div id="popupContainer{{id}}" class="popup-container" role="dialog">
+    {{#if overlay}}<div id="popup{{id}}" class="popup popup-overlay"></div>{{/if}}
+    <div id="popupBox{{id}}" class="popup-box" tabindex="-1">
+        <div id="popupText{{id}}" class="popup-text" tabindex="-1" aria-live="assertive"></div>
+        {{#if closer}}
+        <div class="popup-controls">
+            <button type="button" id="popupClose{{id}}" class="popup-close focus noTapSelection">
+               <svg width="18" height="18" viewBox="0 0 24 24" focusable="false">
+                   <use xlink:href="#icon_cross" />
+                </svg> {{translate "Close"}}
+            </button>
+        </div>
+        {{/if}}
+        <div class="scroll-gradient"></div>
+        
+    </div>
+</div>
+</script>
+<!--
+MODULE:ReferencesPanel2
+-->
+<script data-for="mdl_referencespanel" data-template="navbutton" type="text/x-html-template">
+    <button type="button" class="index-button" aria-expanded="false" title="{{translate 'References'}}">
+        <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false"
+            aria-describedby="references-svg-icon-references">
+            <title id="references-svg-icon-references">{{translate "References"}}</title>
+            <use xlink:href="#icon_references" />
+        </svg>
+        <span class="label">{{translate "References"}}</span>
+    </button>
+</script>
+
+<script data-for="mdl_referencespanel" data-template="referencespanel" type="text/x-html-template">
+    <div class="references-panel-wrap panel-wrap" role='dialog'>
+        <div class="references-panel panel" role="menu">
+            <div class="panel-content">
+                <h1 class="panel-title" tabindex='-1'>{{translate "References"}}</h1>
+                <div class="references-list-holder">
+                    {{{settext '[ref list="all" showalltoggle="true"]'}}}
+                </div>
+            </div>
+            <div class="scroll-gradient"></div>
+        </div>
+        <div class="close-panel-parent">
+            <button type="button" class="references-close references-close-button panel-close-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="references-svgicon-close">
+                    <title id="references-svgicon-close">{{translate "Close"}}</title>
+                    <use xlink:href="#icon_cross" />
+                </svg>
+            </button>
+        </div>
+        <button type="button" class="references-close references-close-full-page panel-close-full-page" tabindex='-1' title="{{translate 'Close'}}">
+        </button>
+    </div>
+</script>
+
+
+<script data-for="mdl_referencespanel" data-template="navbutton-integrated" type="text/x-html-template">
+<!-- <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false"
+    aria-describedby="references-svg-icon-references">
+    <title id="references-svg-icon-references">{{translate "References"}}</title>
+    <use xlink:href="#icon_references" />
+</svg> -->
+<span class="label">{{translate "References"}}</span>
+
+</script>
+<script data-for="mdl_referencespanel" data-template="referencespanel-integrated" type="text/x-html-template">
+<div class="references-content">
+    <div class="references-list-holder">
+        {{{settext '[ref list="all" showalltoggle="true"]'}}}
+    </div>
+</div>
+<div class="scroll-gradient"></div>
+</script>
+<!--
+MODULE: resourcesPanel2
+-->
+<script data-for="mdl_resourcespanel" data-template="navbutton" type="text/x-html-template">
+<button type="button" class="resources-button" aria-expanded="false" title="{{translate 'Resources'}}">	
+	<svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false" >		
+		<use xlink:href="#icon_resources" />
+	</svg>
+	<span class="label">{{translate "Resources"}}</span>
+</button>
+</script>
+<script data-for="mdl_resourcespanel" data-template="resourcespanel" type="text/x-html-template">
+<div class='resources-panel-wrap panel-wrap' role='dialog'>
+	<div class='resources-panel panel'>			
+		<div class='resources-list-holder panel-content'>
+			<h1 tabindex="-1" class="panel-title">{{translate "Resources"}}</h1>
+			<ul aria-label='Resources' class='resources-list'>
+				{{#each resources}}
+					<li data-number='{{number}}' class='resources-list-item' >
+						<a class='focus noTapSelection {{classes}}' data-text='{{name}}' href='{{src}}' target='_blank' rel='noopener'>
+							<span>{{name}}</span>
+							{{#ifequal format "web-url"}}<svg class="icon-url" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_url' />
+							</svg>{{/ifequal}}
+							{{#ifequal format "file-pdf"}}<svg class="icon-pdf" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_pdf' />
+							</svg>{{/ifequal}}
+							{{#ifequal format "file-doc"}}<svg class="icon-doc" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_doc' />
+							</svg>{{/ifequal}}
+							{{#ifequal format "file-xls"}}<svg class="icon-xls" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_xls' />
+							</svg>{{/ifequal}}
+							{{#ifequal format "file-ppt"}}<svg class="icon-ppt" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_ppt' />
+							</svg>{{/ifequal}}
+							{{#ifequal format "file-txt"}}<svg class="icon-txt" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_txt' />
+							</svg>{{/ifequal}}
+							{{#ifequal format "file-rtf"}}<svg class="icon-rtf" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+								<use xlink:href='#icon_rtf' />
+							</svg>{{/ifequal}}
+						</a>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+		<div class="scroll-gradient"></div>		
+	</div>	
+	
+	<div class="close-panel-parent">
+		<button type="button" class='resources-close resources-close-button panelCloseBtn panel-close-button'>
+			<svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="resource-svgicon-close">
+				<title id="resource-svgicon-close">{{translate "Close"}}</title>
+				<use xlink:href="#icon_cross" />
+			</svg>
+			<!-- <span class="label">{{translate "Close"}}</span> -->
+		</button>
+	</div>
+	<button type="button" class='resources-close panel-close-full-page' tabindex='-1' aria-hidden='true'></button>
+</div>
+</script>
+
+
+<script data-for="mdl_resourcespanel" data-template="navbutton-integrated" type="text/x-html-template">
+<!-- <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" focusable="false" >		
+	<use xlink:href="#icon_resources" />
+</svg> -->
+<span class="label">{{translate "Resources"}}</span>
+</script>
+<script data-for="mdl_resourcespanel" data-template="resourcespanel-integrated" type="text/x-html-template">
+<div class='resources-list-holder'>
+	<ul aria-label='Resources' class='resources-list'>
+		{{#each resources}}
+			<li data-number='{{number}}' class='resources-list-item' >
+				<a class='focus noTapSelection {{classes}}' data-text='{{name}}' href='{{src}}' target='_blank'>
+					<span>{{name}}</span>
+					{{#ifequal format "web-url"}}<svg class="icon-url" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_url' />
+					</svg>{{/ifequal}}
+					{{#ifequal format "file-pdf"}}<svg class="icon-pdf" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_pdf' />
+					</svg>{{/ifequal}}
+					{{#ifequal format "file-doc"}}<svg class="icon-doc" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_doc' />
+					</svg>{{/ifequal}}
+					{{#ifequal format "file-xls"}}<svg class="icon-xls" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_xls' />
+					</svg>{{/ifequal}}
+					{{#ifequal format "file-ppt"}}<svg class="icon-ppt" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_ppt' />
+					</svg>{{/ifequal}}
+					{{#ifequal format "file-txt"}}<svg class="icon-txt" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_txt' />
+					</svg>{{/ifequal}}
+					{{#ifequal format "file-rtf"}}<svg class="icon-rtf" width="24" height="24" viewBox="0 0 24 24" focusable="false">
+						<use xlink:href='#icon_rtf' />
+					</svg>{{/ifequal}}
+				</a>
+			</li>
+		{{/each}}
+	</ul>
+</div>
+<div class="scroll-gradient"></div>		
+</script>
+<!--
+MODULE:TabbedMenu2
+-->
+
+<script data-for="mdl_menu" data-template="navbutton" type="text/x-html-template">
+<button type="button" class="menu-button" aria-expanded="false" title="{{translate "Menu"}}">
+    <svg class="item-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false" aria-describedby="menu-svg-icon-menu">
+        <title id="menu-svg-icon-menu">{{translate "Menu"}}</title>
+        <use xlink:href="#icon_index" />
+    </svg>
+    <span class="label" aria-hidden="true">{{translate "Menu"}}</span>
+</button>
+</script>
+
+<script data-for="mdl_menu" data-template="menu" type="text/x-html-template">
+<div class="menu-panel-wrap panel-wrap">
+    <div class="menu-panel panel" role="menu">
+        <div class="panel-header" style="background-image:{{themebanner}}">
+            <h1 tabindex="-1" class="panel-title">{{moduleTitle}}</h1>
+            <div class="tablist" role="tablist" aria-label="Menu items">
+                {{#each tabs}}
+                    <button id="tab-item-{{mod}}" class="tabpanel-tab" data-module="{{mod}}" aria-selected="false" aria-controls="tab-content-{{mod}}" role="tab">{{{content}}}</button>
+                {{/each}}
+            </div>
+        </div>
+        <div class="panel-content">
+            {{#each tabs}}
+                <div id="tab-content-{{mod}}" class="tabpanel-panel" tabindex="0" aria-selected="false" aria-labelledby="tab-item-{{mod}}" aria-controls="tab-content={{mod}}" role="tabpanel" arua-hidden="false"></div>
+            {{/each}}
+        </div>
+        <div class="close-panel-parent">	
+            <button type="button" class='menu-close menu-close-button panel-close-button' title="{{translate 'Close menu'}}">
+                <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" aria-describedby="menu-svgicon-close">
+                    <title id="menu-svgicon-close">{{translate "Close menu"}}</title>
+                    <use xlink:href="#icon_cross" />
+                </svg>
+                <!-- <span>{{translate 'Close menu'}}</span> -->
+            </button>
+        </div>
+    </div>
+    
+    <button type="button" class='menu-close menu-close-full-page panel-close-full-page' tabindex='-1' aria-hidden='true'></button>
+</div>
+</script>
+<!-- template for reference number -->
+<script data-for="mdl_referencesmanager" data-template="shortcode_numbers" type="text/x-html-template">
+{{#each references}}
+    {{#if ../linknumbers}}
+    <sup>
+        <a class="rm-link {{classes}}" rel="reference" data-refid="{{id}}" data-target="{{link}}" href="#" role="button">
+           <span class="screenreader">{{translate "Reference"}}: {{link}} {{translate "Click to view"}}</span>
+           <span class="rm-number" aria-hidden="true">{{number}}</span>
+        </a>
+    </sup>
+    {{else}}
+    <sup class="rm-number {{classes}}" data-refid="{{id}}">
+        <span class="screenreader">{{translate "Reference"}}: {{link}} {{translate "Click to view"}}</span>
+        <span class="rm-number" aria-hidden="true">{{number}}</span>
+    </sup>
+    {{/if}}
+{{/each}}
+</script>
+
+<!-- references list template -->
+<script data-for="mdl_referencesmanager" data-template="list" type="text/x-html-template">
+{{#if showalltoggle}}
+<div class="rm-showall-toggle">
+    <input type="checkbox" class="rm-showall rm-showall-input" id="ref-show-all-toggle" data-for="{{listid}}" />
+    <label for="ref-show-all-toggle" class="ref-showall-label"><span class="rm-showall-toggle-indicator"></span><span>{{translate "Show all references"}}</span></label>
+</div>
+{{/if}}
+<ol class="rm-list {{classes}}" data-listid="{{listid}}">
+{{#each references}}
+    <li class="rm-item {{classes}}" data-refid="{{id}}" data-refuid="{{uid}}">{{{text}}}</li>
+{{/each}}
+</ol>
+</script>
+
+<!-- glossary term template -->
+<script data-for="mdl_glossarymanager" data-template="term" type="text/x-html-template">
+<a href="#" class="glossary-term" data-termuid="{{uid}}">
+    <span class="screenreader">{{term}} (Click to view definition for {{term}})</span>
+    <span aria-hidden="true">{{term}}</span>
+</a>
+</script>
